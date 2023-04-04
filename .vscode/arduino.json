@@ -1,0 +1,7 @@
+{
+    "port": "COM3",
+    "board": "arduino:avr:uno",
+    "programmer": "arduinoasispatmega32u4",
+    "sketch": "src\\core\\arduino\\main.ino",
+    "output": "bin"
+}

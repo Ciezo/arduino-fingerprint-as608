@@ -1,0 +1,37 @@
+[
+  {
+    "Sourcefile": null,
+    "Include": "",
+    "Includepath": "C:\\Users\\abcd1\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.6\\cores\\arduino"
+  },
+  {
+    "Sourcefile": null,
+    "Include": "",
+    "Includepath": "C:\\Users\\abcd1\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.6\\variants\\standard"
+  },
+  {
+    "Sourcefile": "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\bin\\sketch\\_blank.ino.cpp",
+    "Include": "Adafruit_Fingerprint.h",
+    "Includepath": "C:\\Users\\abcd1\\Documents\\Arduino\\libraries\\Adafruit_Fingerprint_Sensor_Library"
+  },
+  {
+    "Sourcefile": "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\bin\\sketch\\_blank.ino.cpp",
+    "Include": "SoftwareSerial.h",
+    "Includepath": "C:\\Users\\abcd1\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.6\\libraries\\SoftwareSerial\\src"
+  },
+  {
+    "Sourcefile": "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\bin\\sketch\\_blank.ino.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\abcd1\\Documents\\Arduino\\libraries\\Adafruit_Fingerprint_Sensor_Library\\Adafruit_Fingerprint.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\abcd1\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.6\\libraries\\SoftwareSerial\\src\\SoftwareSerial.cpp",
+    "Include": "",
+    "Includepath": null
+  }
+]
