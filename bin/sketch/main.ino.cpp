@@ -1,36 +1,46 @@
-# 1 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+#include <Arduino.h>
+#line 1 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 /*
-
     @author Cloyd Van S. Secuya
-
     @details Source code for setting up fingerprint AS608 sensor with Arduino 
-
 */
-# 5 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 // PRE-PROCESSOR DIRECTIVES / HEADERS
-# 7 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino" 2
-# 8 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino" 2
-# 9 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino" 2
+#include <Adafruit_Fingerprint.h>
+#include <SoftwareSerial.h>
+#include <String.h> 
 
-
-# 10 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 // AS608 ports
-SoftwareSerial mySerial(2, 3); // TX, RX
+SoftwareSerial mySerial(2, 3);  // TX, RX
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
-uint8_t id; // Fingerprint id
-uint8_t opt;
+uint8_t id;   // Fingerprint id
+uint8_t opt; 
 
+#line 16 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+void setup();
+#line 50 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+uint8_t scan_input(void);
+#line 61 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+uint8_t getFingerprintMethod(void);
+#line 71 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+void loop();
+#line 93 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+uint8_t getFingerprintEnroll();
+#line 252 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+uint8_t getFingerprintID();
+#line 324 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+int getFingerprintIDez();
+#line 16 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 void setup() {
 
     // Begin Serial communication at 9600 baud rate
     Serial.begin(9600);
-
+    
     // set the data rate for the sensor serial port
     /** Check if the fingerprint sensor is detected */
     finger.begin(57600);
     if (finger.verifyPassword()) {
         Serial.println("Found fingerprint sensor!");
-    }
+    } 
 
     else {
         Serial.println("Did not find fingerprint sensor :(");
@@ -77,17 +87,17 @@ uint8_t getFingerprintMethod(void) {
 
 void loop() {
     switch (opt) {
-        case 0:
+        case 0: 
             delay(0);
             setup();
-        case 1:
+        case 1: 
             getFingerprintEnroll();
             delay(1000);
             break;
-        case 2:
+        case 2: 
             getFingerprintID();
             delay(1000);
-            break;
+            break; 
     }
 
 
@@ -116,19 +126,19 @@ uint8_t getFingerprintEnroll() {
 
     int p = -1;
     Serial.print("Waiting for valid finger to enroll as #"); Serial.println(id);
-    while (p != 0x00 /*!< Command execution is complete*/) {
+    while (p != FINGERPRINT_OK) {
         p = finger.getImage();
         switch (p) {
-        case 0x00 /*!< Command execution is complete*/:
+        case FINGERPRINT_OK:
         Serial.println("Image taken");
         break;
-        case 0x02 /*!< No finger on the sensor*/:
+        case FINGERPRINT_NOFINGER:
         Serial.println(".");
         break;
-        case 0x01 /*!< Error when receiving data package*/:
+        case FINGERPRINT_PACKETRECIEVEERR:
         Serial.println("Communication error");
         break;
-        case 0x03 /*!< Failed to enroll the finger*/:
+        case FINGERPRINT_IMAGEFAIL:
         Serial.println("Imaging error");
         break;
         default:
@@ -141,19 +151,19 @@ uint8_t getFingerprintEnroll() {
 
     p = finger.image2Tz(1);
     switch (p) {
-        case 0x00 /*!< Command execution is complete*/:
+        case FINGERPRINT_OK:
         Serial.println("Image converted");
         break;
-        case 0x06 /*!< Failed to generate character file due to overly disorderly*/:
+        case FINGERPRINT_IMAGEMESS:
         Serial.println("Image too messy");
         return p;
-        case 0x01 /*!< Error when receiving data package*/:
+        case FINGERPRINT_PACKETRECIEVEERR:
         Serial.println("Communication error");
         return p;
-        case 0x07 /*!< Failed to generate character file due to the lack of character point*/:
+        case FINGERPRINT_FEATUREFAIL:
         Serial.println("Could not find fingerprint features");
         return p;
-        case 0x15 /*!< Failed to generate image because of lac of valid primary image*/:
+        case FINGERPRINT_INVALIDIMAGE:
         Serial.println("Could not find fingerprint features");
         return p;
         default:
@@ -164,25 +174,25 @@ uint8_t getFingerprintEnroll() {
     Serial.println("Remove finger");
     delay(2000);
     p = 0;
-    while (p != 0x02 /*!< No finger on the sensor*/) {
+    while (p != FINGERPRINT_NOFINGER) {
         p = finger.getImage();
     }
     Serial.print("ID "); Serial.println(id);
     p = -1;
     Serial.println("Place same finger again");
-    while (p != 0x00 /*!< Command execution is complete*/) {
+    while (p != FINGERPRINT_OK) {
         p = finger.getImage();
         switch (p) {
-        case 0x00 /*!< Command execution is complete*/:
+        case FINGERPRINT_OK:
         Serial.println("Image taken");
         break;
-        case 0x02 /*!< No finger on the sensor*/:
+        case FINGERPRINT_NOFINGER:
         Serial.print(".");
         break;
-        case 0x01 /*!< Error when receiving data package*/:
+        case FINGERPRINT_PACKETRECIEVEERR:
         Serial.println("Communication error");
         break;
-        case 0x03 /*!< Failed to enroll the finger*/:
+        case FINGERPRINT_IMAGEFAIL:
         Serial.println("Imaging error");
         break;
         default:
@@ -195,19 +205,19 @@ uint8_t getFingerprintEnroll() {
 
     p = finger.image2Tz(2);
     switch (p) {
-        case 0x00 /*!< Command execution is complete*/:
+        case FINGERPRINT_OK:
         Serial.println("Image converted");
         break;
-        case 0x06 /*!< Failed to generate character file due to overly disorderly*/:
+        case FINGERPRINT_IMAGEMESS:
         Serial.println("Image too messy");
         return p;
-        case 0x01 /*!< Error when receiving data package*/:
+        case FINGERPRINT_PACKETRECIEVEERR:
         Serial.println("Communication error");
         return p;
-        case 0x07 /*!< Failed to generate character file due to the lack of character point*/:
+        case FINGERPRINT_FEATUREFAIL:
         Serial.println("Could not find fingerprint features");
         return p;
-        case 0x15 /*!< Failed to generate image because of lac of valid primary image*/:
+        case FINGERPRINT_INVALIDIMAGE:
         Serial.println("Could not find fingerprint features");
         return p;
         default:
@@ -216,15 +226,15 @@ uint8_t getFingerprintEnroll() {
     }
 
     // OK converted!
-    Serial.print("Creating model for #"); Serial.println(id);
+    Serial.print("Creating model for #");  Serial.println(id);
 
     p = finger.createModel();
-    if (p == 0x00 /*!< Command execution is complete*/) {
+    if (p == FINGERPRINT_OK) {
         Serial.println("Prints matched!");
-    } else if (p == 0x01 /*!< Error when receiving data package*/) {
+    } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
         Serial.println("Communication error");
         return p;
-    } else if (p == 0x0A /*!< Failed to combine the character files*/) {
+    } else if (p == FINGERPRINT_ENROLLMISMATCH) {
         Serial.println("Fingerprints did not match");
         return p;
     } else {
@@ -234,15 +244,15 @@ uint8_t getFingerprintEnroll() {
 
     Serial.print("ID "); Serial.println(id);
     p = finger.storeModel(id);
-    if (p == 0x00 /*!< Command execution is complete*/) {
+    if (p == FINGERPRINT_OK) {
         Serial.println("Stored!");
-    } else if (p == 0x01 /*!< Error when receiving data package*/) {
+    } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
         Serial.println("Communication error");
         return p;
-    } else if (p == 0x0B /*!< Addressed PageID is beyond the finger library*/) {
+    } else if (p == FINGERPRINT_BADLOCATION) {
         Serial.println("Could not store in that location");
         return p;
-    } else if (p == 0x18 /*!< Error when writing flash*/) {
+    } else if (p == FINGERPRINT_FLASHERR) {
         Serial.println("Error writing to flash");
         return p;
     } else {
@@ -262,16 +272,16 @@ uint8_t getFingerprintID() {
 
     uint8_t p = finger.getImage();
     switch (p) {
-        case 0x00 /*!< Command execution is complete*/:
+        case FINGERPRINT_OK:
         Serial.println("Image taken");
         break;
-        case 0x02 /*!< No finger on the sensor*/:
+        case FINGERPRINT_NOFINGER:
         Serial.println("No finger detected");
         return p;
-        case 0x01 /*!< Error when receiving data package*/:
+        case FINGERPRINT_PACKETRECIEVEERR:
         Serial.println("Communication error");
         return p;
-        case 0x03 /*!< Failed to enroll the finger*/:
+        case FINGERPRINT_IMAGEFAIL:
         Serial.println("Imaging error");
         return p;
         default:
@@ -283,19 +293,19 @@ uint8_t getFingerprintID() {
 
     p = finger.image2Tz();
     switch (p) {
-        case 0x00 /*!< Command execution is complete*/:
+        case FINGERPRINT_OK:
         Serial.println("Image converted");
         break;
-        case 0x06 /*!< Failed to generate character file due to overly disorderly*/:
+        case FINGERPRINT_IMAGEMESS:
         Serial.println("Image too messy");
         return p;
-        case 0x01 /*!< Error when receiving data package*/:
+        case FINGERPRINT_PACKETRECIEVEERR:
         Serial.println("Communication error");
         return p;
-        case 0x07 /*!< Failed to generate character file due to the lack of character point*/:
+        case FINGERPRINT_FEATUREFAIL:
         Serial.println("Could not find fingerprint features");
         return p;
-        case 0x15 /*!< Failed to generate image because of lac of valid primary image*/:
+        case FINGERPRINT_INVALIDIMAGE:
         Serial.println("Could not find fingerprint features");
         return p;
         default:
@@ -305,12 +315,12 @@ uint8_t getFingerprintID() {
 
     // OK converted!
     p = finger.fingerSearch();
-    if (p == 0x00 /*!< Command execution is complete*/) {
+    if (p == FINGERPRINT_OK) {
         Serial.println("Found a print match!");
-    } else if (p == 0x01 /*!< Error when receiving data package*/) {
+    } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
         Serial.println("Communication error");
         return p;
-    } else if (p == 0x09 /*!< Failed to find matching finger*/) {
+    } else if (p == FINGERPRINT_NOTFOUND) {
         Serial.println("Did not find a match");
         return p;
     } else {
@@ -321,7 +331,7 @@ uint8_t getFingerprintID() {
     // found a match!
     Serial.print("Found ID #"); Serial.print(finger.fingerID);
     Serial.print(" with confidence of "); Serial.println(finger.confidence);
-
+    
     return finger.fingerID;
 }
 
@@ -330,13 +340,13 @@ uint8_t getFingerprintID() {
 // returns -1 if failed, otherwise returns ID #
 int getFingerprintIDez() {
     uint8_t p = finger.getImage();
-    if (p != 0x00 /*!< Command execution is complete*/) return -1;
+    if (p != FINGERPRINT_OK)  return -1;
 
     p = finger.image2Tz();
-    if (p != 0x00 /*!< Command execution is complete*/) return -1;
+    if (p != FINGERPRINT_OK)  return -1;
 
     p = finger.fingerFastSearch();
-    if (p != 0x00 /*!< Command execution is complete*/) return -1;
+    if (p != FINGERPRINT_OK)  return -1;
 
     // found a match!
     Serial.print("Found ID #"); Serial.print(finger.fingerID);

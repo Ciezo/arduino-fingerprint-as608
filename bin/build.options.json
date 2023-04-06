@@ -8,5 +8,5 @@
   "hardwareFolders": "C:\\Program Files (x86)\\Arduino\\hardware,C:\\Users\\abcd1\\AppData\\Local\\Arduino15\\packages",
   "otherLibrariesFolders": "C:\\Users\\abcd1\\Documents\\Arduino\\libraries",
   "runtime.ide.version": "10819",
-  "sketchLocation": "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\_blank.ino"
+  "sketchLocation": "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 }
