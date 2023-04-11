@@ -43,6 +43,7 @@ void setup() {
     Serial.println("Please, choose a task");
     Serial.println("[1] Enroll a fingerprint");
     Serial.println("[2] Verify fingerprint");
+    Serial.println("[3] Remove all fingerprint data");
     opt = getFingerprintMethod();
 }
 
@@ -81,6 +82,10 @@ void loop() {
             getFingerprintID();
             delay(1000);
             break; 
+        case 3: 
+            deleteAllFingerprint(); 
+            delay(1000);
+            break;
     }
 
 
@@ -335,4 +340,14 @@ int getFingerprintIDez() {
     Serial.print("Found ID #"); Serial.print(finger.fingerID);
     Serial.print(" with confidence of "); Serial.println(finger.confidence);
     return finger.fingerID;
+}
+
+
+
+/** This function deletes or removes the entire fingerprint records */
+void deleteAllFingerprint() {
+    Serial.println("\n\nDeleting all fingerprint templates!");
+    Serial.println("Number of fingerprint data to delete: " + finger.getTemplateCount());
+
+    finger.emptyDatabase();
 }

@@ -17,18 +17,20 @@ uint8_t opt;
 
 #line 16 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 void setup();
-#line 50 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+#line 51 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 uint8_t scan_input(void);
-#line 61 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+#line 62 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 uint8_t getFingerprintMethod(void);
-#line 71 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+#line 72 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 void loop();
-#line 93 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+#line 98 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 uint8_t getFingerprintEnroll();
-#line 252 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+#line 257 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 uint8_t getFingerprintID();
-#line 324 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+#line 329 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 int getFingerprintIDez();
+#line 348 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+void deleteAllFingerprint();
 #line 16 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 void setup() {
 
@@ -60,6 +62,7 @@ void setup() {
     Serial.println("Please, choose a task");
     Serial.println("[1] Enroll a fingerprint");
     Serial.println("[2] Verify fingerprint");
+    Serial.println("[3] Remove all fingerprint data");
     opt = getFingerprintMethod();
 }
 
@@ -98,6 +101,10 @@ void loop() {
             getFingerprintID();
             delay(1000);
             break; 
+        case 3: 
+            deleteAllFingerprint(); 
+            delay(1000);
+            break;
     }
 
 
@@ -352,4 +359,14 @@ int getFingerprintIDez() {
     Serial.print("Found ID #"); Serial.print(finger.fingerID);
     Serial.print(" with confidence of "); Serial.println(finger.confidence);
     return finger.fingerID;
+}
+
+
+
+/** This function deletes or removes the entire fingerprint records */
+void deleteAllFingerprint() {
+    Serial.println("\n\nDeleting all fingerprint templates!");
+    Serial.println("Number of fingerprint data to delete: " + finger.getTemplateCount());
+
+    finger.emptyDatabase();
 }
