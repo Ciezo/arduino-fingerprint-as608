@@ -11,9 +11,10 @@
 # 7 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino" 2
 # 8 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino" 2
 # 9 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino" 2
+# 10 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino" 2
+# 11 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino" 2
+# 12 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino" 2
 
-
-# 10 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 // AS608 ports
 SoftwareSerial mySerial(2, 3); // TX, RX
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
@@ -39,7 +40,7 @@ void setup() {
 
     finger.getTemplateCount();
     if (finger.templateCount == 0) {
-        Serial.print("Sensor doesn't contain any fingerprint data. Please run the 'enroll' example.");
+        Serial.print("Sensor doesn't contain any fingerprint data.");
     }
     else {
         Serial.println("Waiting for valid finger...");
@@ -171,12 +172,16 @@ uint8_t getFingerprintEnroll() {
     p = 0;
     while (p != 0x02 /*!< No finger on the sensor*/) {
         p = finger.getImage();
+        // Write the fingerprint template data over Serial port
+        Serial.write(p);
     }
     Serial.print("ID "); Serial.println(id);
     p = -1;
     Serial.println("Place same finger again");
     while (p != 0x00 /*!< Command execution is complete*/) {
         p = finger.getImage();
+        // Write the fingerprint template data over Serial port
+        Serial.write(p);
         switch (p) {
         case 0x00 /*!< Command execution is complete*/:
         Serial.println("Image taken");
@@ -239,6 +244,8 @@ uint8_t getFingerprintEnroll() {
 
     Serial.print("ID "); Serial.println(id);
     p = finger.storeModel(id);
+    // Write the fingerprint data model over Serial 
+    Serial.write(p);
     if (p == 0x00 /*!< Command execution is complete*/) {
         Serial.println("Stored!");
     } else if (p == 0x01 /*!< Error when receiving data package*/) {

@@ -6,6 +6,9 @@
 #include <Adafruit_Fingerprint.h>
 #include <SoftwareSerial.h>
 #include <String.h> 
+#include <Ethernet.h>
+#include <MySQL_Connection.h>
+#include <MySQL_Cursor.h>
 
 // AS608 ports
 SoftwareSerial mySerial(2, 3);  // TX, RX
@@ -32,7 +35,7 @@ void setup() {
 
     finger.getTemplateCount();
     if (finger.templateCount == 0) {
-        Serial.print("Sensor doesn't contain any fingerprint data. Please run the 'enroll' example.");
+        Serial.print("Sensor doesn't contain any fingerprint data.");
     }
     else {
         Serial.println("Waiting for valid finger...");
@@ -164,12 +167,16 @@ uint8_t getFingerprintEnroll() {
     p = 0;
     while (p != FINGERPRINT_NOFINGER) {
         p = finger.getImage();
+        // Write the fingerprint template data over Serial port
+        Serial.write(p);
     }
     Serial.print("ID "); Serial.println(id);
     p = -1;
     Serial.println("Place same finger again");
     while (p != FINGERPRINT_OK) {
         p = finger.getImage();
+        // Write the fingerprint template data over Serial port
+        Serial.write(p);
         switch (p) {
         case FINGERPRINT_OK:
         Serial.println("Image taken");
@@ -232,6 +239,8 @@ uint8_t getFingerprintEnroll() {
 
     Serial.print("ID "); Serial.println(id);
     p = finger.storeModel(id);
+    // Write the fingerprint data model over Serial 
+    Serial.write(p);
     if (p == FINGERPRINT_OK) {
         Serial.println("Stored!");
     } else if (p == FINGERPRINT_PACKETRECIEVEERR) {

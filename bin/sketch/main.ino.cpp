@@ -8,6 +8,9 @@
 #include <Adafruit_Fingerprint.h>
 #include <SoftwareSerial.h>
 #include <String.h> 
+#include <Ethernet.h>
+#include <MySQL_Connection.h>
+#include <MySQL_Cursor.h>
 
 // AS608 ports
 SoftwareSerial mySerial(2, 3);  // TX, RX
@@ -15,23 +18,23 @@ Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 uint8_t id;   // Fingerprint id
 uint8_t opt; 
 
-#line 16 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+#line 19 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 void setup();
-#line 51 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+#line 54 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 uint8_t scan_input(void);
-#line 62 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+#line 65 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 uint8_t getFingerprintMethod(void);
-#line 72 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+#line 75 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 void loop();
-#line 98 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+#line 101 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 uint8_t getFingerprintEnroll();
-#line 257 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+#line 266 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 uint8_t getFingerprintID();
-#line 329 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+#line 338 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 int getFingerprintIDez();
-#line 348 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+#line 357 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 void deleteAllFingerprint();
-#line 16 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
+#line 19 "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\src\\core\\arduino\\main.ino"
 void setup() {
 
     // Begin Serial communication at 9600 baud rate
@@ -51,7 +54,7 @@ void setup() {
 
     finger.getTemplateCount();
     if (finger.templateCount == 0) {
-        Serial.print("Sensor doesn't contain any fingerprint data. Please run the 'enroll' example.");
+        Serial.print("Sensor doesn't contain any fingerprint data.");
     }
     else {
         Serial.println("Waiting for valid finger...");
@@ -183,12 +186,16 @@ uint8_t getFingerprintEnroll() {
     p = 0;
     while (p != FINGERPRINT_NOFINGER) {
         p = finger.getImage();
+        // Write the fingerprint template data over Serial port
+        Serial.write(p);
     }
     Serial.print("ID "); Serial.println(id);
     p = -1;
     Serial.println("Place same finger again");
     while (p != FINGERPRINT_OK) {
         p = finger.getImage();
+        // Write the fingerprint template data over Serial port
+        Serial.write(p);
         switch (p) {
         case FINGERPRINT_OK:
         Serial.println("Image taken");
@@ -251,6 +258,8 @@ uint8_t getFingerprintEnroll() {
 
     Serial.print("ID "); Serial.println(id);
     p = finger.storeModel(id);
+    // Write the fingerprint data model over Serial 
+    Serial.write(p);
     if (p == FINGERPRINT_OK) {
         Serial.println("Stored!");
     } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
