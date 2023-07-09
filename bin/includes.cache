@@ -21,13 +21,13 @@
   },
   {
     "Sourcefile": "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\bin\\sketch\\main.ino.cpp",
-    "Include": "Ethernet.h",
-    "Includepath": "C:\\Program Files (x86)\\Arduino\\libraries\\Ethernet\\src"
+    "Include": "Wire.h",
+    "Includepath": "C:\\Users\\abcd1\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.6\\libraries\\Wire\\src"
   },
   {
     "Sourcefile": "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\bin\\sketch\\main.ino.cpp",
-    "Include": "MySQL_Connection.h",
-    "Includepath": "C:\\Users\\abcd1\\Documents\\Arduino\\libraries\\MySQL_Connector_Arduino\\src"
+    "Include": "LiquidCrystal_I2C.h",
+    "Includepath": "C:\\Users\\abcd1\\Documents\\Arduino\\libraries\\Arduino-LiquidCrystal-I2C-library-master"
   },
   {
     "Sourcefile": "c:\\Users\\abcd1\\Desktop\\Project\\arduino\\fingerprint\\bin\\sketch\\main.ino.cpp",
@@ -45,72 +45,17 @@
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Program Files (x86)\\Arduino\\libraries\\Ethernet\\src\\Dhcp.cpp",
-    "Include": "SPI.h",
-    "Includepath": "C:\\Users\\abcd1\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.6\\libraries\\SPI\\src"
-  },
-  {
-    "Sourcefile": "C:\\Program Files (x86)\\Arduino\\libraries\\Ethernet\\src\\Dhcp.cpp",
+    "Sourcefile": "C:\\Users\\abcd1\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.6\\libraries\\Wire\\src\\Wire.cpp",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Program Files (x86)\\Arduino\\libraries\\Ethernet\\src\\Dns.cpp",
+    "Sourcefile": "C:\\Users\\abcd1\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.6\\libraries\\Wire\\src\\utility\\twi.c",
     "Include": "",
     "Includepath": null
   },
   {
-    "Sourcefile": "C:\\Program Files (x86)\\Arduino\\libraries\\Ethernet\\src\\Ethernet.cpp",
-    "Include": "",
-    "Includepath": null
-  },
-  {
-    "Sourcefile": "C:\\Program Files (x86)\\Arduino\\libraries\\Ethernet\\src\\EthernetClient.cpp",
-    "Include": "",
-    "Includepath": null
-  },
-  {
-    "Sourcefile": "C:\\Program Files (x86)\\Arduino\\libraries\\Ethernet\\src\\EthernetServer.cpp",
-    "Include": "",
-    "Includepath": null
-  },
-  {
-    "Sourcefile": "C:\\Program Files (x86)\\Arduino\\libraries\\Ethernet\\src\\EthernetUdp.cpp",
-    "Include": "",
-    "Includepath": null
-  },
-  {
-    "Sourcefile": "C:\\Program Files (x86)\\Arduino\\libraries\\Ethernet\\src\\socket.cpp",
-    "Include": "",
-    "Includepath": null
-  },
-  {
-    "Sourcefile": "C:\\Program Files (x86)\\Arduino\\libraries\\Ethernet\\src\\utility\\w5100.cpp",
-    "Include": "",
-    "Includepath": null
-  },
-  {
-    "Sourcefile": "C:\\Users\\abcd1\\Documents\\Arduino\\libraries\\MySQL_Connector_Arduino\\src\\MySQL_Connection.cpp",
-    "Include": "",
-    "Includepath": null
-  },
-  {
-    "Sourcefile": "C:\\Users\\abcd1\\Documents\\Arduino\\libraries\\MySQL_Connector_Arduino\\src\\MySQL_Cursor.cpp",
-    "Include": "",
-    "Includepath": null
-  },
-  {
-    "Sourcefile": "C:\\Users\\abcd1\\Documents\\Arduino\\libraries\\MySQL_Connector_Arduino\\src\\MySQL_Encrypt_Sha1.cpp",
-    "Include": "",
-    "Includepath": null
-  },
-  {
-    "Sourcefile": "C:\\Users\\abcd1\\Documents\\Arduino\\libraries\\MySQL_Connector_Arduino\\src\\MySQL_Packet.cpp",
-    "Include": "",
-    "Includepath": null
-  },
-  {
-    "Sourcefile": "C:\\Users\\abcd1\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.6\\libraries\\SPI\\src\\SPI.cpp",
+    "Sourcefile": "C:\\Users\\abcd1\\Documents\\Arduino\\libraries\\Arduino-LiquidCrystal-I2C-library-master\\LiquidCrystal_I2C.cpp",
     "Include": "",
     "Includepath": null
   }
